@@ -131,16 +131,6 @@ class RemoteFeedLoaderTests: XCTestCase {
         .failure(error)
     }
     
-    private func trackForMemoryLeaks(
-        _ instance: AnyObject,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Instance should be deallocated. Potential memory leak.", file: file, line: line)
-        }
-    }
-    
     private func makeItem(
         id: UUID,
         description: String? = nil,
