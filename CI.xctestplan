@@ -4,7 +4,7 @@
       "id" : "56F356F8-3FA2-428F-A8DF-82C4D3EB792C",
       "name" : "Test Scheme Action",
       "options" : {
-
+        "threadSanitizerEnabled" : true
       }
     },
     {
@@ -16,7 +16,16 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:EssentialFeed.xcodeproj",
+          "identifier" : "080EDEF021B6DA7E00813479",
+          "name" : "EssentialFeed"
+        }
+      ]
+    },
+    "threadSanitizerEnabled" : true
   },
   "testTargets" : [
     {
