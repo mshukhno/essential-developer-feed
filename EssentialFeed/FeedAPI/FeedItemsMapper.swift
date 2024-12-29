@@ -12,7 +12,7 @@ internal final class FeedItemsMapper {
         let items: [Item]
         
         var feed: [FeedItem] {
-            items.map { $0.item }
+            items.map(\.item)
         }
     }
 
