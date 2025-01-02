@@ -9,7 +9,7 @@ import Foundation
 
 public final class LocalFeedLoader {
     public typealias SavedResult = Error?
-    
+    public typealias LoadResult = LoadFeedResult
     private let store: FeedStore
     private let currentDate: () -> Date
     
@@ -30,8 +30,12 @@ public final class LocalFeedLoader {
         }
     }
     
-    public func load(completion: @escaping (Error?) -> Void) {
-        store.retrieve(completion: completion)
+    public func load(completion: @escaping (LoadResult) -> Void) {
+        store.retrieve {
+            if let error = $0 {
+                completion(.failure(error))
+            }
+        }
     }
     
     private func cache(_ feed: [FeedImage], with completion: @escaping (SavedResult) -> Void) {
