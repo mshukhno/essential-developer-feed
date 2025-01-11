@@ -9,9 +9,11 @@ import CoreData
 
 public final class CoreDataFeedStore: FeedStore {
     private let container: NSPersistentContainer
+    private let context: NSManagedObjectContext
     
     public init(bundle: Bundle = .main) throws {
         container = try NSPersistentContainer.load(modelName: "FeedStore", in: bundle)
+        context = container.newBackgroundContext()
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
@@ -55,3 +57,16 @@ private extension NSManagedObjectModel {
             .flatMap { NSManagedObjectModel(contentsOf: $0) }
     }
 }
+
+//private class ManagedCache: NSManagedObject {
+//    @NSManaged var timestamp: Date
+//    @NSManaged var feed: NSOrderedSet
+//}
+//
+//private class ManagedFeedImage: NSManagedObject {
+//    @NSManaged var id: UUID
+//    @NSManaged var imageDescription: String?
+//    @NSManaged var location: String?
+//    @NSManaged var url: URL
+//    @NSManaged var cache: ManagedCache
+//}
