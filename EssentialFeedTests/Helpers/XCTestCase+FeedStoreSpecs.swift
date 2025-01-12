@@ -101,6 +101,16 @@ extension FeedStoreSpecs where Self: XCTestCase {
         expect(sut, toRetrieve: .found(feed: latestFeed, timestamp: latestTimestamp), file: file, line: line)
     }
     
+    func assertThatDeleteDeliversNoErrorOnEmptyCache(
+        on sut: FeedStore,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        deleteCache(from: sut)
+        
+        expect(sut, toRetrieve: .empty)
+    }
+    
     func assertThatDeleteHasNoSideEffectsOnEmptyCache(
         on sut: FeedStore,
         file: StaticString = #filePath,
