@@ -26,7 +26,6 @@ jobs:
             -scheme "CI_macOS" \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            -sdk macos \
             -destination 'platform=macOS,arch=x86_64'
 
           xcodebuild clean test \
@@ -34,5 +33,4 @@ jobs:
             -scheme "CI_macOS" \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
-            -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
