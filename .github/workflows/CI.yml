@@ -30,7 +30,7 @@ jobs:
 
           xcodebuild clean test \
             -project EssentialFeed.xcodeproj \
-            -scheme "CI_macOS" \
+            -scheme "CI_iOS" \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
