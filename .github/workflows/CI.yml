@@ -2,9 +2,60 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - '*'
+
+jobs:
+  ios-tests:
+    name: Run iOS Tests
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 14.3 # Replace with your Xcode version
+
+      - name: Install Dependencies
+        run: |
+          brew install cocoapods || true
+          pod install --project-directory=YourProjectDirectory
+
+      - name: Run iOS Tests
+        run: |
+          xcodebuild test \
+            -scheme YourIOSScheme \
+            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
+            -testPlan YourIOSTestPlan.xctestplan \
+            | xcpretty
+
+  macos-tests:
+    name: Run macOS Tests
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 14.3 # Replace with your Xcode version
+
+      - name: Run macOS Tests
+        run: |
+          xcodebuild test \
+            -scheme YourMacOSScheme \
+            -destination 'platform=macOS' \
+            -testPlan YourMacOSTestPlan.xctestplan \
+            | xcpretty
+
 
 jobs:
   build-and-test:
