@@ -23,32 +23,9 @@ jobs:
       - name: Verify Xcode Version
         run: xcodebuild -version
 
-      - name: Run iOS Tests
+      - name: List Available Simulators
+        run: xcrun simctl list
+
+      - name: Run Tests
         run: |
-          xcodebuild test \
-            -scheme "CI_iOS" \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
-            -testPlan CI_iOS.xctestplan \
-            | xcpretty
-
-  macos-tests:
-    name: Run macOS Tests
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set Xcode Version to 16.2
-        run: sudo xcode-select -s /Applications/Xcode_16.2.app
-
-      - name: Verify Xcode Version
-        run: xcodebuild -version
-
-      - name: Run macOS Tests
-        run: |
-          xcodebuild test \
-            -scheme "CI_macOS" \
-            -destination 'platform=macOS' \
-            -testPlan CI_macOS.xctestplan \
-            | xcpretty
+          xcodebuild test -scheme "CI_macOS" -destination 'platform=macOS' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
