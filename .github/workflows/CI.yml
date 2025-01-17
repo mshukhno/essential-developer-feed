@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - '*'
+      - "*"
 
 jobs:
   ios-tests:
@@ -17,22 +17,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: 14.3 # Replace with your Xcode version
+      - name: Set Xcode Version to 16.2
+        run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
-      - name: Install Dependencies
-        run: |
-          brew install cocoapods || true
-          pod install --project-directory=YourProjectDirectory
+      - name: Verify Xcode Version
+        run: xcodebuild -version
 
       - name: Run iOS Tests
         run: |
           xcodebuild test \
-            -scheme YourIOSScheme \
-            -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.4' \
-            -testPlan YourIOSTestPlan.xctestplan \
+            -scheme "CI_iOS" \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0' \
+            -testPlan CI_iOS.xctestplan \
             | xcpretty
 
   macos-tests:
@@ -43,45 +39,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: 14.3 # Replace with your Xcode version
-
-      - name: Run macOS Tests
-        run: |
-          xcodebuild test \
-            -scheme YourMacOSScheme \
-            -destination 'platform=macOS' \
-            -testPlan YourMacOSTestPlan.xctestplan \
-            | xcpretty
-
-
-jobs:
-  build-and-test:
-    runs-on: macos-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
       - name: Set Xcode Version to 16.2
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
 
       - name: Verify Xcode Version
         run: xcodebuild -version
 
-      - name: Build and Test
+      - name: Run macOS Tests
         run: |
-          xcodebuild clean test \
-            -project EssentialFeed.xcodeproj \
+          xcodebuild test \
             -scheme "CI_macOS" \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            -destination 'platform=macOS,arch=x86_64'
-
-          xcodebuild clean test \
-            -project EssentialFeed.xcodeproj \
-            -scheme "CI_iOS" \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.0'
+            -destination 'platform=macOS' \
+            -testPlan CI_macOS.xctestplan \
+            | xcpretty
