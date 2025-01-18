@@ -2,16 +2,20 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches:
+      - "*"
 
 jobs:
-  build-and-test:
+  ios-tests:
+    name: Run Tests
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
       - name: Set Xcode Version to 16.2
         run: sudo xcode-select -s /Applications/Xcode_16.2.app
@@ -19,9 +23,13 @@ jobs:
       - name: Verify Xcode Version
         run: xcodebuild -version
 
-      - name: Build and Test
+      - name: Run macOS Tests
         run: |
-          xcodebuild clean test \
-          -project EssentialFeed.xcodeproj \
-          -scheme "CI" \
-          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          xcodebuild test -scheme "CI_macOS" -destination 'platform=macOS' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+
+      - name: Download iOS Platform
+        run: xcodebuild -downloadPlatform iOS -verbose
+
+      - name: Run iOS Tests
+        run: |
+          xcodebuild test -scheme "CI_iOS" -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
