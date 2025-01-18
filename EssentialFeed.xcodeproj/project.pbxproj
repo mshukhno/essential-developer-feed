@@ -24,6 +24,8 @@
 		F834D1412C7B891A0023B689 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F834D1402C7B891A0023B689 /* HTTPClient.swift */; };
 		F834D1432C7B894D0023B689 /* FeedItemsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F834D1422C7B894D0023B689 /* FeedItemsMapper.swift */; };
 		F85256D92D3C088800E4F680 /* XCTest+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F813F76E2CC62C1D00D6F48D /* XCTest+MemoryLeakTracking.swift */; };
+		F85256DF2D3C3C1F00E4F680 /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; platformFilter = ios; };
+		F85256E02D3C3C1F00E4F680 /* EssentialFeed.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 080EDEF121B6DA7E00813479 /* EssentialFeed.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F8721FA22D32F6D600C91C6B /* FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721FA12D32F6CE00C91C6B /* FeedStoreSpecs.swift */; };
 		F8721FA42D32F76900C91C6B /* XCTestCase+FeedStoreSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721FA32D32F75300C91C6B /* XCTestCase+FeedStoreSpecs.swift */; };
 		F8721FA72D33341100C91C6B /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8721FA62D33340C00C91C6B /* CoreDataFeedStoreTests.swift */; };
@@ -60,6 +62,13 @@
 			remoteGlobalIDString = 080EDEF021B6DA7E00813479;
 			remoteInfo = EssentialFeed;
 		};
+		F85256E12D3C3C1F00E4F680 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 080EDEE821B6DA7E00813479 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 080EDEF021B6DA7E00813479;
+			remoteInfo = EssentialFeed;
+		};
 		F8721FDB2D33D36D00C91C6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 080EDEE821B6DA7E00813479 /* Project object */;
@@ -77,6 +86,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		F85256E32D3C3C1F00E4F680 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				F85256E02D3C3C1F00E4F680 /* EssentialFeed.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F8721FDD2D33D36D00C91C6B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -175,6 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F85256DF2D3C3C1F00E4F680 /* EssentialFeed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,10 +464,12 @@
 				F876AD512D3822CA002D3396 /* Sources */,
 				F876AD522D3822CA002D3396 /* Frameworks */,
 				F876AD532D3822CA002D3396 /* Resources */,
+				F85256E32D3C3C1F00E4F680 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F85256E22D3C3C1F00E4F680 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				F876AD562D3822CA002D3396 /* EssentialFeediOS */,
@@ -508,6 +531,7 @@
 					};
 					F876AD542D3822CA002D3396 = {
 						CreatedOnToolsVersion = 16.2;
+						LastSwiftMigration = 1620;
 					};
 					F876AD5B2D3822CA002D3396 = {
 						CreatedOnToolsVersion = 16.2;
@@ -669,6 +693,12 @@
 			isa = PBXTargetDependency;
 			target = 080EDEF021B6DA7E00813479 /* EssentialFeed */;
 			targetProxy = F83011212CD6AE40008035A5 /* PBXContainerItemProxy */;
+		};
+		F85256E22D3C3C1F00E4F680 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 080EDEF021B6DA7E00813479 /* EssentialFeed */;
+			targetProxy = F85256E12D3C3C1F00E4F680 /* PBXContainerItemProxy */;
 		};
 		F8721FDC2D33D36D00C91C6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1011,6 +1041,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1040,6 +1071,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1050,6 +1082,7 @@
 			buildSettings = {
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
