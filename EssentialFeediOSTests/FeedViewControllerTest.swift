@@ -241,6 +241,24 @@ final class FeedViewControllerTest: XCTestCase {
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second image is near visible")
     }
     
+    func test_feedImageView_cancelsImageURLPreloadingWhenNotNearVisibleAnymore() {
+        let image0 = makeImage(url: URL(string: "http://url-0.com")!)
+        let image1 = makeImage(url: URL(string: "http://url-1.com")!)
+        let (sut, loader) = makeSUT()
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        sut.endAppearanceTransition()
+        loader.completeFeedLoading(with: [image0, image1])
+        XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until image is near visible")
+        
+        sut.simulateFeedImageViewNotNearVisible(at: 0)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected a cancelled image URL request once first image is not near visible anymore")
+        
+        sut.simulateFeedImageViewNotNearVisible(at: 1)
+        XCTAssertEqual(loader.cancelledImageURLs, [image0.url, image1.url], "Expected cancelled second image URL request once second image is not near visible anymore")
+    }
+    
     // MARK: Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedViewController, LoaderSpy) {
         let loader = LoaderSpy()
@@ -362,6 +380,15 @@ private extension FeedViewController {
         let indexPath = IndexPath(row: index, section: feedImageSection)
         dataSource?.tableView(tableView, prefetchRowsAt: [indexPath])
     }
+    
+    func simulateFeedImageViewNotNearVisible(at index: Int) {
+        simulateFeedImageViewVisible(at: index)
+        
+        let dataSource = tableView.prefetchDataSource
+        let indexPath = IndexPath(row: index, section: feedImageSection)
+        dataSource?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
+    }
+
     
     var isShowingLoadingIndicator: Bool {
         refreshControl?.isRefreshing == true
