@@ -1,5 +1,13 @@
+//
+//  FeedLoaderPresentationAdapter.swift
+//  EssentialFeed
+//
+//  Created by Mikalai Shuhno on 23/01/2025.
+//
 
-private final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
+import EssentialFeed
+
+final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
     private let feedLoader: FeedLoader
     var presenter: FeedPresenter?
     
