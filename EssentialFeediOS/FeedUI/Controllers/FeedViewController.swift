@@ -18,12 +18,6 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         didSet { tableView.reloadData() }
     }
     
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        title = FeedPresenter.title
-    }
-    
     public override func viewIsAppearing(_ animated: Bool) {
         super.viewIsAppearing(animated)
         
