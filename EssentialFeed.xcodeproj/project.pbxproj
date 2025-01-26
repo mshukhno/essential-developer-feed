@@ -51,6 +51,7 @@
 		F8EA8A1B2D46994E0023DD71 /* FeedLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EA8A1A2D46994E0023DD71 /* FeedLoadingViewModel.swift */; };
 		F8EA8A1D2D4699C30023DD71 /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EA8A1C2D4699C00023DD71 /* FeedPresenter.swift */; };
 		F8EA8A1E2D469A4E0023DD71 /* Feed.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F8EA8A132D4692830023DD71 /* Feed.xcstrings */; };
+		F8EA8A752D46A7930023DD71 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EA8A322D46A3DE0023DD71 /* FeedImageDataLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +161,7 @@
 		F8EA8A182D46991A0023DD71 /* FeedErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedErrorViewModel.swift; sourceTree = "<group>"; };
 		F8EA8A1A2D46994E0023DD71 /* FeedLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoadingViewModel.swift; sourceTree = "<group>"; };
 		F8EA8A1C2D4699C00023DD71 /* FeedPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenter.swift; sourceTree = "<group>"; };
+		F8EA8A322D46A3DE0023DD71 /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		F8ED40482CD7B3D800BF604B /* EssentialFeedTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EssentialFeedTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -283,6 +285,7 @@
 		080EDF1021B6DFA200813479 /* Feed Feature */ = {
 			isa = PBXGroup;
 			children = (
+				F8EA8A322D46A3DE0023DD71 /* FeedImageDataLoader.swift */,
 				080EDF0B21B6DAE800813479 /* FeedImage.swift */,
 				080EDF0D21B6DCB600813479 /* FeedLoader.swift */,
 			);
@@ -662,6 +665,7 @@
 				F834D1412C7B891A0023B689 /* HTTPClient.swift in Sources */,
 				080EDF0C21B6DAE800813479 /* FeedImage.swift in Sources */,
 				F8EA8A1B2D46994E0023DD71 /* FeedLoadingViewModel.swift in Sources */,
+				F8EA8A752D46A7930023DD71 /* FeedImageDataLoader.swift in Sources */,
 				F813F7712CC63C1600D6F48D /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
