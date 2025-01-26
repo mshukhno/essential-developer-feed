@@ -7,34 +7,65 @@
 
 import XCTest
 
-class FeedPresenter {
-    let view: Any
+protocol FeedErrorView {
+    func display(errorMessage: FeedErrorViewModel)
+}
+
+struct FeedErrorViewModel {
+    let message: String?
     
-    init(view: Any) {
-        self.view = view
+    static var noError: FeedErrorViewModel {
+        FeedErrorViewModel(message: nil)
+    }
+}
+
+class FeedPresenter {
+    let errorView: FeedErrorView
+    
+    init(errorView: FeedErrorView) {
+        self.errorView = errorView
+    }
+    
+    func didStartLoadingFeed() {
+        errorView.display(errorMessage: .noError)
     }
 }
 
 class FeedPresenterTests: XCTestCase {
     
     func test_init_doesNotSendAnyMessagesToView() {
-        let (view, _) = makeSUT()
+        let (_, view) = makeSUT()
         
         XCTAssertTrue(view.messages.isEmpty, "Expected no view messages")
     }
     
+    func test_didStartLoadingFeed_displaysNoErrorMessage() {
+        let (sut, view) = makeSUT()
+        sut.didStartLoadingFeed()
+        
+        XCTAssertEqual(view.messages, [.display(errorMessage: .none)])
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (ViewSpy, FeedPresenter) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedPresenter, ViewSpy) {
         let view = ViewSpy()
-        let sut = FeedPresenter(view: view)
+        let sut = FeedPresenter(errorView: view)
         trackForMemoryLeaks(view, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
-        return (view, sut)
+        return (sut, view)
     }
     
     
-    class ViewSpy {
-        private(set) var messages = [Any]()
+    class ViewSpy: FeedErrorView {
+        private(set) var messages = [Message]()
+        
+        enum Message: Equatable {
+            case display(errorMessage: String?)
+        }
+        
+        func display(errorMessage: FeedErrorViewModel) {
+            messages.append(.display(errorMessage: errorMessage.message))
+        }
     }
 }
