@@ -73,19 +73,19 @@ class FeedPresenterTests: XCTestCase {
     
     
     class ViewSpy: FeedErrorView, FeedLoadingView {
-        private(set) var messages = [Message]()
+        private(set) var messages = Set<Message>()
         
-        enum Message: Equatable {
+        enum Message: Hashable {
             case display(errorMessage: String?)
             case display(isLoading: Bool)
         }
         
         func display(errorMessage: FeedErrorViewModel) {
-            messages.append(.display(errorMessage: errorMessage.message))
+            messages.insert(.display(errorMessage: errorMessage.message))
         }
         
         func display(_ viewModel: FeedLoadingViewModel) {
-            messages.append(.display(isLoading: viewModel.isLoading))
+            messages.insert(.display(isLoading: viewModel.isLoading))
         }
     }
 }
