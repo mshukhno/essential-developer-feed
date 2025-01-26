@@ -5,6 +5,7 @@
 //  Created by Mikalai Shuhno on 23/01/2025.
 //
 
+@testable import EssentialFeed
 @testable import EssentialFeediOS
 import Foundation
 import XCTest

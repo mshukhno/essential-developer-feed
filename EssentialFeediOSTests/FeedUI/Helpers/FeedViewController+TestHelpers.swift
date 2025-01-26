@@ -61,4 +61,8 @@ extension FeedViewController {
         let index = IndexPath(row: row, section: feedImageSection)
         return dataSource?.tableView(tableView, cellForRowAt: index)
     }
+    
+    var errorMessage: String? {
+        return errorView.message
+    }
 }
