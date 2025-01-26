@@ -18,12 +18,21 @@ class FeedPresenter {
 class FeedPresenterTests: XCTestCase {
     
     func test_init_doesNotSendAnyMessagesToView() {
-        let view = ViewSpy()
-        _ = FeedPresenter(view: view)
+        let (view, _) = makeSUT()
+        
         XCTAssertTrue(view.messages.isEmpty, "Expected no view messages")
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (ViewSpy, FeedPresenter) {
+        let view = ViewSpy()
+        let sut = FeedPresenter(view: view)
+        trackForMemoryLeaks(view, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return (view, sut)
+    }
+    
     
     class ViewSpy {
         private(set) var messages = [Any]()
