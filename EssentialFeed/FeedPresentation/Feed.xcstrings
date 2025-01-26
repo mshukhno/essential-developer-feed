@@ -9,6 +9,12 @@
             "state" : "translated",
             "value" : "Couldn't connect to server"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось подключиться к серверу"
+          }
         }
       }
     },

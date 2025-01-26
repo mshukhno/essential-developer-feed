@@ -8,63 +8,6 @@
 import XCTest
 import EssentialFeed
 
-protocol FeedErrorView {
-    func display(errorMessage: FeedErrorViewModel)
-}
-
-protocol FeedLoadingView {
-    func display(_ viewModel: FeedLoadingViewModel)
-}
-
-protocol FeedView {
-    func display(_ viewModel: FeedViewModel)
-}
-
-class FeedPresenter {
-    let errorView: FeedErrorView
-    let loadingView: FeedLoadingView
-    let feedView: FeedView
-    
-    static var title: String {
-        NSLocalizedString(
-            "FEED_VIEW_TITLE",
-            tableName: "Feed",
-            bundle: Bundle(for: FeedPresenter.self),
-            comment: "Title for the feed view"
-        )
-    }
-    
-    private static var feedLoadError: String {
-        NSLocalizedString(
-            "FEED_VIEW_CONNECTION_ERROR",
-            tableName: "Feed",
-            bundle: Bundle(for: FeedPresenter.self),
-            comment: "Error message displayed when we can't load the image feed from the server"
-        )
-    }
-    
-    init(errorView: FeedErrorView, loadingView: FeedLoadingView, feedView: FeedView) {
-        self.errorView = errorView
-        self.loadingView = loadingView
-        self.feedView = feedView
-    }
-    
-    func didStartLoadingFeed() {
-        errorView.display(errorMessage: .noError)
-        loadingView.display(FeedLoadingViewModel(isLoading: true))
-    }
-    
-    func didFinishLoadingFeed(with feed: [FeedImage]) {
-        feedView.display(FeedViewModel(feed: feed))
-        loadingView.display(FeedLoadingViewModel(isLoading: false))
-    }
-    
-    func didFinishLoadingFeed(with error: Error) {
-        loadingView.display(FeedLoadingViewModel(isLoading: false))
-        errorView.display(errorMessage: .init(message: FeedPresenter.feedLoadError))
-    }
-}
-
 class FeedPresenterTests: XCTestCase {
     
     func test_title_isLocalized() {
