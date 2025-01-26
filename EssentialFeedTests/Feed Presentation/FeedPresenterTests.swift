@@ -20,22 +20,6 @@ protocol FeedView {
     func display(_ viewModel: FeedViewModel)
 }
 
-struct FeedViewModel {
-    let feed: [FeedImage]
-}
-
-struct FeedErrorViewModel {
-    let message: String?
-    
-    static var noError: FeedErrorViewModel {
-        FeedErrorViewModel(message: nil)
-    }
-}
-
-struct FeedLoadingViewModel {
-    let isLoading: Bool
-}
-
 class FeedPresenter {
     let errorView: FeedErrorView
     let loadingView: FeedLoadingView
