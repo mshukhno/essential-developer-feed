@@ -79,7 +79,7 @@ extension LocalFeedLoader {
                 }
                 
             case .success:
-                break
+                completion(.success(()))
             }
         }
     }
