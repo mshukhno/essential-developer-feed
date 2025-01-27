@@ -57,6 +57,7 @@
 		F8EA8A1E2D469A4E0023DD71 /* Feed.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = F8EA8A132D4692830023DD71 /* Feed.xcstrings */; };
 		F8EA8A752D46A7930023DD71 /* FeedImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EA8A322D46A3DE0023DD71 /* FeedImageDataLoader.swift */; };
 		F8EA8A772D46A8040023DD71 /* LoadFeedImageDataFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EA8A762D46A8030023DD71 /* LoadFeedImageDataFromRemoteUseCaseTests.swift */; };
+		F8FD74BE2D47FAA900F4CB08 /* LocalFeedImageDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8FD74BD2D47FA9E00F4CB08 /* LocalFeedImageDataLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -173,6 +174,7 @@
 		F8EA8A322D46A3DE0023DD71 /* FeedImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedImageDataLoader.swift; sourceTree = "<group>"; };
 		F8EA8A762D46A8030023DD71 /* LoadFeedImageDataFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedImageDataFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		F8ED40482CD7B3D800BF604B /* EssentialFeedTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = EssentialFeedTests.xctestplan; sourceTree = "<group>"; };
+		F8FD74BD2D47FA9E00F4CB08 /* LocalFeedImageDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedImageDataLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -365,6 +367,7 @@
 		F834D1442C7B93A80023B689 /* Feed API */ = {
 			isa = PBXGroup;
 			children = (
+				F8FD74BD2D47FA9E00F4CB08 /* LocalFeedImageDataLoaderTests.swift */,
 				F8282B232D478F960042ADAB /* Helpers */,
 				F8EA8A762D46A8030023DD71 /* LoadFeedImageDataFromRemoteUseCaseTests.swift */,
 				F8A09F5E2C7A76E70018667B /* LoadFeedFromRemoteUseCaseTests.swift */,
@@ -722,6 +725,7 @@
 				F8923C2D2D2707B900D419B6 /* LoadFeedFromCacheUseCaseTests.swift in Sources */,
 				F8721FA22D32F6D600C91C6B /* FeedStoreSpecs.swift in Sources */,
 				F813F76C2CC50C4400D6F48D /* URLSessionHTTPClientTests.swift in Sources */,
+				F8FD74BE2D47FAA900F4CB08 /* LocalFeedImageDataLoaderTests.swift in Sources */,
 				F8721FA42D32F76900C91C6B /* XCTestCase+FeedStoreSpecs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
