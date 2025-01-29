@@ -21,44 +21,28 @@ final class FeedLoaderCacheDecorator: FeedLoader {
     
 }
 
-class FeedLoaderCacheDecoratorTests: XCTestCase {
+class FeedLoaderCacheDecoratorTests: XCTestCase, FeedLoaderTestCase {
     
     func test_load_deliversFeedOnLoaderSuccess() {
         let feed = uniqueFeed()
-        let loader = FeedLoaderStub(result: .success(feed))
-        let sut = FeedLoaderCacheDecorator(decoratee: loader)
+        let sut = makeSUT(loadedResult: .success(feed))
         
         expect(sut, toCompleteWith: .success(feed))
     }
     
     func test_load_deliversFeedOnLoaderFailure() {
-        let loader = FeedLoaderStub(result: .failure(anyNSError()))
-        let sut = FeedLoaderCacheDecorator(decoratee: loader)
+        let sut = makeSUT(loadedResult: .failure(anyNSError()))
         
         expect(sut, toCompleteWith: .failure(anyNSError()))
     }
     
-    private func expect(
-        _ sut: FeedLoaderCacheDecorator,
-        toCompleteWith expectedResult: FeedLoader.Result,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) {
-        let exp = expectation(description: "Wait for load completion")
+    // MARK: - Helpers
+    private func makeSUT(loadedResult: FeedLoader.Result) -> FeedLoaderCacheDecorator {
+        let loader = FeedLoaderStub(result: loadedResult)
+        let sut = FeedLoaderCacheDecorator(decoratee: loader)
+        trackForMemoryLeaks(loader)
+        trackForMemoryLeaks(sut)
         
-        sut.load { result in
-            switch (result, expectedResult) {
-            case let (.success(receivedData), .success(expectedData)):
-                XCTAssertEqual(receivedData, expectedData, "Expected to complete with success", file: file, line: line)
-            case (.failure, .failure):
-                break
-            default:
-                XCTFail("Expected to complete with \(expectedResult), got \(result) instead", file: file, line: line)
-            }
-            
-            exp.fulfill()
-        }
-                
-        wait(for: [exp], timeout: 1.0)
+        return sut
     }
 }
