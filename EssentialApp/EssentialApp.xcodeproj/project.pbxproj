@@ -85,11 +85,6 @@
 			path = EssentialApp;
 			sourceTree = "<group>";
 		};
-		F8FD74F42D484F6500F4CB08 /* EssentialAppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = EssentialAppTests;
-			sourceTree = "<group>";
-		};
 		F8FD74FE2D484F6500F4CB08 /* EssentialAppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = EssentialAppUITests;
@@ -144,7 +139,6 @@
 			isa = PBXGroup;
 			children = (
 				F8FD74DD2D484F6300F4CB08 /* EssentialApp */,
-				F8FD74F42D484F6500F4CB08 /* EssentialAppTests */,
 				F8FD74FE2D484F6500F4CB08 /* EssentialAppUITests */,
 				F8FD74DC2D484F6300F4CB08 /* Products */,
 				F82EF6292D4850D300D31639 /* EssentialFeed.xcodeproj */,
@@ -200,9 +194,6 @@
 			);
 			dependencies = (
 				F8FD74F32D484F6500F4CB08 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				F8FD74F42D484F6500F4CB08 /* EssentialAppTests */,
 			);
 			name = EssentialAppTests;
 			packageProductDependencies = (
