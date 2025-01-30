@@ -21,12 +21,17 @@ public final class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
         decoratee.loadImageData(from: url) { [weak self] result in
             switch result  {
             case let .success(data):
-                self?.cache.save(data, for: url) { _ in }
+                self?.cache.saveIgnoringResult(for: url, data: data)
             default:
                 break
             }
             completion(result)
         }
     }
-    
+}
+
+private extension FeedImageDataCache {
+    func saveIgnoringResult(for url: URL, data: Data) {
+        save(data, for: url) { _ in }
+    }
 }
