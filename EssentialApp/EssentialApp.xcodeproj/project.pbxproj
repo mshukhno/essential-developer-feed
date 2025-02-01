@@ -53,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F8340E802D4E56930054CF2E /* EssentialAppTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = EssentialAppTests.xctestplan; path = ../EssentialAppTests.xctestplan; sourceTree = "<group>"; };
 		F83C4DAB2D4C39CF00877AC7 /* EssentialAppUIAcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialAppUIAcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D561362D4A7F0F0049794C /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D561372D4A7F0F0049794C /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,6 +146,7 @@
 		F8FD74D22D484F6300F4CB08 = {
 			isa = PBXGroup;
 			children = (
+				F8340E802D4E56930054CF2E /* EssentialAppTests.xctestplan */,
 				F8FD74DD2D484F6300F4CB08 /* EssentialApp */,
 				F8FD74FE2D484F6500F4CB08 /* EssentialAppUITests */,
 				F8D561452D4A810E0049794C /* EssentialAppTests */,
