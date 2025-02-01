@@ -32,4 +32,4 @@ jobs:
 
       - name: Run iOS Tests
         run: |
-          xcodebuild test -scheme "CI_iOS" -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          xcodebuild test -workspace EssentialApp.xcworkspace -scheme "CI_iOS" -destination 'platform=iOS Simulator,name=iPhone 16' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
