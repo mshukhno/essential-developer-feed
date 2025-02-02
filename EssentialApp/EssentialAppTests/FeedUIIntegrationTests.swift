@@ -45,7 +45,7 @@ final class FeedUIIntegrationTests: XCTestCase {
         sut.simulateUserInitiatedFeedReload()
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once user initiates a reload")
         
-        loader.completeFeedLoadingWithError(at: 0)
+        loader.completeFeedLoadingWithError(at: 1)
         XCTAssertFalse(sut.isShowingLoadingIndicator, "Expected no loading indicator once user initiated loading completes with error")
     }
     
@@ -314,7 +314,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     // MARK: Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedViewController, LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = FeedUIComposer.feedComposeWith(feedLoader: loader, imageLoader: loader)
+        let sut = FeedUIComposer.feedComposeWith(feedLoader: loader.loadPublisher, imageLoader: loader)
         sut.replaceRefreshControlWithFakeForiOS17Support()
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
