@@ -15,7 +15,7 @@ public protocol ResourceView {
 public final class LoadResourcePresenter<Resource, View: ResourceView> {
     public typealias Mapper = (Resource) -> View.ResourceViewModel
     
-    private let errorView: FeedErrorView
+    private let errorView: ResourceErrorView
     private let loadingView: ResourceLoadingView
     private let resourceView: View
     private let mapper: Mapper
@@ -30,7 +30,7 @@ public final class LoadResourcePresenter<Resource, View: ResourceView> {
     }
     
     public init(
-        errorView: FeedErrorView,
+        errorView: ResourceErrorView,
         loadingView: ResourceLoadingView,
         resourceView: View,
         mapper: @escaping Mapper

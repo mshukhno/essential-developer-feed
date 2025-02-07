@@ -84,7 +84,7 @@ class LoadResourcePresenterTests: XCTestCase {
         NSError(domain: "any error", code: 0)
     }
     
-    class ViewSpy: FeedErrorView, ResourceLoadingView, ResourceView {
+    class ViewSpy: ResourceErrorView, ResourceLoadingView, ResourceView {
         typealias ResourceViewModel = String
         
         private(set) var messages = Set<Message>()
@@ -95,7 +95,7 @@ class LoadResourcePresenterTests: XCTestCase {
             case display(resourceViewModel: String)
         }
         
-        func display(errorMessage: FeedErrorViewModel) {
+        func display(errorMessage: ResourceErrorViewModel) {
             messages.insert(.display(errorMessage: errorMessage.message))
         }
         
