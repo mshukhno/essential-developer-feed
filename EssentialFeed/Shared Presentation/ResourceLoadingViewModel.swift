@@ -1,12 +1,13 @@
 //
-//  FeedLoadingViewModel.swift
+//  ResourceLoadingViewModel.swift
 //  EssentialFeed
 //
-//  Created by Mikalai Shuhno on 26/01/2025.
+//  Created by Mikalai Shuhno on 08/02/2025.
 //
 
+import Foundation
 
-public struct FeedLoadingViewModel {
+public struct ResourceLoadingViewModel {
     public let isLoading: Bool
     
     public init(isLoading: Bool) {
