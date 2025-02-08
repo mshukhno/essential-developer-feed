@@ -26,13 +26,14 @@ public final class FeedUIComposer {
         
         let weakRefVirtualProxy = WeakRefVirtualProxy(feedController)
         
-        presentationAdapter.presenter = FeedPresenter(
+        presentationAdapter.presenter = LoadResourcePresenter(
             errorView: weakRefVirtualProxy,
             loadingView: weakRefVirtualProxy,
-            feedView: FeedViewAdapter(
+            resourceView: FeedViewAdapter(
                 controller: feedController,
                 imageLoader: imageLoader
-            )
+            ),
+            mapper: FeedPresenter.map
         )
         
         return feedController
