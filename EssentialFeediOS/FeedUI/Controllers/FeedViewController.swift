@@ -53,8 +53,8 @@ public final class FeedViewController: UITableViewController, UITableViewDataSou
         }
     }
     
-    public func display(errorMessage: ResourceErrorViewModel) {
-        errorView?.message = errorMessage.message
+    public func display(_ viewModel: ResourceErrorViewModel) {
+        errorView?.message = viewModel.message
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
