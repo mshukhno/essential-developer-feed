@@ -1,11 +1,10 @@
 //
-//  FeedImagePresenter.swift
+//  FeedImageView.swift
 //  EssentialFeed
 //
-//  Created by Mikalai Shuhno on 22/01/2025.
+//  Created by Mikalai Shuhno on 08/02/2025.
 //
 
-import EssentialFeed
 import Foundation
 
 public protocol FeedImageView {
@@ -67,4 +66,15 @@ public final class FeedImagePresenter<View: FeedImageView, Image> where View.Ima
             )
         )
     }
+    
+    public static func map(_ image: FeedImage) -> FeedImageViewModel<Image> {
+        FeedImageViewModel(
+            description: image.description,
+            location: image.location,
+            image: nil,
+            isLoading: false,
+            shouldRetry: false
+        )
+    }
+    
 }
