@@ -312,7 +312,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     }
     
     // MARK: Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (FeedViewController, LoaderSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (ListViewController, LoaderSpy) {
         let loader = LoaderSpy()
         let sut = FeedUIComposer.feedComposeWith(feedLoader: loader.loadPublisher, imageLoader: loader.loadImageDataPublisher)
         sut.replaceRefreshControlWithFakeForiOS17Support()
@@ -335,7 +335,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     }
 }
 
-private extension FeedViewController {
+private extension ListViewController {
     func replaceRefreshControlWithFakeForiOS17Support() {
         let fake = FakeRefreshControl()
         
