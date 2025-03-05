@@ -58,6 +58,17 @@ extension ListViewController {
         refreshControl?.simulatePullToRefresh()
     }
     
+//    @discardableResult
+//    func simulateFeedImageBecomingVisibleAgain(at row: Int) -> FeedImageCell? {
+//        let view = simulateFeedImageViewIsNotVisible(at: row)
+//        
+//        let delegate = tableView.delegate
+//        let index = IndexPath(row: row, section: feedImageSection)
+//        delegate?.tableView?(tableView, willDisplay: view!, forRowAt: index)
+//        
+//        return view
+//    }
+    
     @discardableResult
     func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
         feedImageView(at: index) as? FeedImageCell
@@ -98,6 +109,7 @@ extension ListViewController {
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
+        tableView.numberOfSections == 0 ? 0 :
         tableView.numberOfRows(inSection: feedImageSection)
     }
     
@@ -106,12 +118,15 @@ extension ListViewController {
     }
     
     func feedImageView(at row: Int) -> UITableViewCell? {
+        print("123q - feedImageView at", row)
         guard numberOfRenderedFeedImageViews() > row else {
+            print("123q - feedImageView at nil", row)
             return nil
         }
         
         let dataSource = tableView.dataSource
         let index = IndexPath(row: row, section: feedImageSection)
+        print("123q - feedImageView at index \(index)")
         return dataSource?.tableView(tableView, cellForRowAt: index)
     }
     
