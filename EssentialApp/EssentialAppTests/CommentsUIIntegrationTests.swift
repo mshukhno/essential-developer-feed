@@ -16,7 +16,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     
     func test_commentsView_hasTitle() {
         let (sut, _) = makeSUT()
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         
         XCTAssertEqual(sut.title, commentsTitle)
     }
@@ -25,7 +25,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         let (sut, loader) = makeSUT()
         XCTAssertEqual(loader.loadCommentsCallCount, 0, "Expected no loading requests before view is loaded")
         
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         XCTAssertEqual(loader.loadCommentsCallCount, 1, "Expected a loading request once view is appeared")
         
         sut.simulateUserInitiatedReload()
@@ -38,7 +38,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
     func test_loadingCommentsIndicator_isVisibleWhileLoadingComments() {
         let (sut, loader) = makeSUT()
         
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         XCTAssertTrue(sut.isShowingLoadingIndicator, "Expected loading indicator once view is loaded")
         
         loader.completeCommentsLoading(at: 0)
@@ -56,7 +56,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         let comment1 = makeComment(message: "another message", username: "another username")
         let (sut, loader) = makeSUT()
         
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         assertThat(sut, isRendering: [ImageComment]())
         
         loader.completeCommentsLoading(with: [comment0, comment1], at: 0)
@@ -71,7 +71,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         let comment = makeComment()
         let (sut, loader) = makeSUT()
         
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         loader.completeCommentsLoading(with: [comment], at: 0)
         assertThat(sut, isRendering: [comment])
         
@@ -84,7 +84,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         let comment = makeComment()
         let (sut, loader) = makeSUT()
         
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         loader.completeCommentsLoading(with: [comment], at: 0)
         assertThat(sut, isRendering: [comment])
         
@@ -93,9 +93,9 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         assertThat(sut, isRendering: [comment])
     }
     
-    override func test_loadFeedCompletion_dispatchesFromBackgroundToMainThread() {
+    func test_loadCommentsCompletion_dispatchesFromBackgroundToMainThread() {
         let (sut, loader) = makeSUT()
-        sut.loadAndAppearView()
+        sut.simulateAppearance()
         
         let exp = expectation(description: "Wait for completion")
         DispatchQueue.global().async {
