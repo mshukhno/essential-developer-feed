@@ -165,4 +165,10 @@ extension ListViewController {
         let index = IndexPath(row: row, section: commentsSection)
         return dataSource?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
     }
+    
+    func simulateTapOnImage(at row: Int) {
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: row, section: feedImageSection)
+        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+    }
 }

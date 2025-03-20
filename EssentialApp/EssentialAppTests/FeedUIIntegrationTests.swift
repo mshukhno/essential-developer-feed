@@ -19,6 +19,24 @@ open class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(sut.title, feedTitle)
     }
     
+    func test_imageSelection_notifiesHandler() {
+        let image0 = makeImage()
+        let image1 = makeImage()
+        var selectedImages = [FeedImage]()
+        let (sut, loader) = makeSUT(selection: { selectedImages.append($0) })
+        
+        sut.simulateAppearance()
+        loader.completeFeedLoading(with: [image0, image1], at: 0)
+        
+        sut.simulateTapOnImage(at: 0)
+        XCTAssertEqual(selectedImages, [image0])
+        
+        sut.simulateTapOnImage(at: 1)
+        XCTAssertEqual(selectedImages, [image0, image1])
+        
+        runLoopToWaitUIKitFreeUpResources()
+    }
+    
     func test_loadFeedActions_requestFeedFromLoader() {
         let (sut, loader) = makeSUT()
         XCTAssertEqual(loader.loadFeedCallCount, 0, "Expected no loading requests before view is loaded")
@@ -344,9 +362,17 @@ open class FeedUIIntegrationTests: XCTestCase {
     }
     
     // MARK: Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (ListViewController, LoaderSpy) {
+    private func makeSUT(
+        selection: @escaping (FeedImage) -> Void = { _ in },
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> (ListViewController, LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = FeedUIComposer.feedComposeWith(feedLoader: loader.loadPublisher, imageLoader: loader.loadImageDataPublisher)
+        let sut = FeedUIComposer.feedComposeWith(
+            feedLoader: loader.loadPublisher,
+            imageLoader: loader.loadImageDataPublisher,
+            selection: selection
+        )
         sut.replaceRefreshControlWithFakeForiOS17Support()
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
