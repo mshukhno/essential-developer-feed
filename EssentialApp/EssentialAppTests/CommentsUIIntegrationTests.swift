@@ -177,9 +177,9 @@ class CommentsUIIntegrationTests: XCTestCase {
         )
         let viewModel = ImageCommentsPresenter.map(comments)
         viewModel.comments.enumerated().forEach { index, comment in
-            XCTAssertEqual(sut.commentMessage(at: index), comment.message, "Expected comment message at index \(index) to be \(comment.message), got \(sut.commentMessage(at: index)) instead", file: file, line: line)
-            XCTAssertEqual(sut.commentDate(at: index), comment.date, "Expected date message at index \(index) to be \(comment.date), got \(sut.commentDate(at: index)) instead", file: file, line: line)
-            XCTAssertEqual(sut.commentUsername(at: index), comment.username, "Expected comment message at index \(index) to be \(comment.username), got \(sut.commentUsername(at: index)) instead", file: file, line: line)
+            XCTAssertEqual(sut.commentMessage(at: index), comment.message, "Expected comment message at index \(index) to be \(comment.message), got \(String(describing: sut.commentMessage(at: index))) instead", file: file, line: line)
+            XCTAssertEqual(sut.commentDate(at: index), comment.date, "Expected date message at index \(index) to be \(comment.date), got \(String(describing: sut.commentDate(at: index))) instead", file: file, line: line)
+            XCTAssertEqual(sut.commentUsername(at: index), comment.username, "Expected comment message at index \(index) to be \(comment.username), got \(String(describing: sut.commentUsername(at: index))) instead", file: file, line: line)
         }
     }
     
