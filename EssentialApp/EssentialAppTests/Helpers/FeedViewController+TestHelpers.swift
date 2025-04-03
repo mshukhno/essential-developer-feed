@@ -103,9 +103,31 @@ extension ListViewController {
         dataSource?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
     }
 
+    func cell(row: Int, section: Int) -> UITableViewCell? {
+        guard numberOfRows(in: section) > row else {
+            return nil
+        }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: section)
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
+    
+    func simulateLoadMoreFeedAction() {
+        guard let view = cell(row: 0, section: loadMoreSection) as? LoadMoreCell else {
+            return
+        }
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: 0, section: loadMoreSection)
+        delegate?.tableView?(tableView, willDisplay: view, forRowAt: indexPath)
+        print("123q", delegate)
+    }
     
     var isShowingLoadingIndicator: Bool {
         refreshControl?.isRefreshing == true
+    }
+    
+    func numberOfRows(in section: Int) -> Int {
+        tableView.numberOfRows(inSection: section)
     }
     
     func numberOfRenderedFeedImageViews() -> Int {
@@ -124,6 +146,10 @@ extension ListViewController {
     
     var commentsSection: Int {
         0
+    }
+    
+    var loadMoreSection: Int {
+        1
     }
     
     func feedImageView(at row: Int) -> UITableViewCell? {

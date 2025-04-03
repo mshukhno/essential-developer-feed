@@ -51,6 +51,20 @@ open class FeedUIIntegrationTests: XCTestCase {
         XCTAssertEqual(loader.loadFeedCallCount, 3, "Expected a third loading request once user initiates another reload")
     }
     
+    func test_loadMoreActions_requestMoreFromLoader() {
+        let (sut, loader) = makeSUT()
+        sut.simulateAppearance()
+        loader.completeFeedLoading()
+        
+        XCTAssertEqual(loader.loadMoreCallCount, 0, "Expected no request until no more action")
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected load more requests")
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no requests while loading more")
+    }
+    
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
         let (sut, loader) = makeSUT()
         
@@ -136,17 +150,13 @@ open class FeedUIIntegrationTests: XCTestCase {
         let (sut, loader) = makeSUT()
         
         sut.simulateAppearance()
-        print("123q - simulateAppearance")
         loader.completeFeedLoading(with: [image0, image1])
-        print("123q - completeFeedLoading")
         XCTAssertEqual(loader.loadedImageURLs, [], "Expected no image URL requests until views become visible")
         
         sut.simulateFeedImageViewVisible(at: 0)
-        print("123q - simulateFeedImageViewVisibleAt0")
         XCTAssertEqual(loader.loadedImageURLs, [image0.url], "Expected first image URL request once first view becomes visible")
         
         sut.simulateFeedImageViewVisible(at: 1)
-        print("123q - simulateFeedImageViewVisibleAt1")
         XCTAssertEqual(loader.loadedImageURLs, [image0.url, image1.url], "Expected second image URL request once second view also becomes visible")
     }
     
