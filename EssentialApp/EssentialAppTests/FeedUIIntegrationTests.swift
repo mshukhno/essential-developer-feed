@@ -28,10 +28,10 @@ open class FeedUIIntegrationTests: XCTestCase {
         sut.simulateAppearance()
         loader.completeFeedLoading(with: [image0, image1], at: 0)
         
-        sut.simulateTapOnImage(at: 0)
+        sut.simulateTapOnFeedImage(at: 0)
         XCTAssertEqual(selectedImages, [image0])
         
-        sut.simulateTapOnImage(at: 1)
+        sut.simulateTapOnFeedImage(at: 1)
         XCTAssertEqual(selectedImages, [image0, image1])
         
         runLoopToWaitUIKitFreeUpResources()
@@ -54,15 +54,27 @@ open class FeedUIIntegrationTests: XCTestCase {
     func test_loadMoreActions_requestMoreFromLoader() {
         let (sut, loader) = makeSUT()
         sut.simulateAppearance()
-        loader.completeFeedLoading()
+        loader.completeFeedLoading(with: [makeImage()])
         
-        XCTAssertEqual(loader.loadMoreCallCount, 0, "Expected no request until no more action")
-        
-        sut.simulateLoadMoreFeedAction()
-        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected load more requests")
+        XCTAssertEqual(loader.loadMoreCallCount, 0, "Expected no requests before until load more action")
         
         sut.simulateLoadMoreFeedAction()
-        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no requests while loading more")
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected load more request")
+        
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 1, "Expected no request while loading more")
+        
+        loader.completeLoadMore(lastPage: false, at: 0)
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 2, "Expected request after load more completed with more pages")
+        
+        loader.completeLoadMoreWithError(at: 1)
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected request after load more failure")
+        
+        loader.completeLoadMore(lastPage: true, at: 2)
+        sut.simulateLoadMoreFeedAction()
+        XCTAssertEqual(loader.loadMoreCallCount, 3, "Expected no request after loading all pages")
     }
     
     func test_loadingFeedIndicator_isVisibleWhileLoadingFeed() {
@@ -169,7 +181,7 @@ open class FeedUIIntegrationTests: XCTestCase {
         loader.completeFeedLoading(with: [image0, image1])
         XCTAssertEqual(loader.cancelledImageURLs, [], "Expected no image URL requests until views become visible")
         
-        sut.simulateFeedImageViewIsNotVisible(at: 0)
+        sut.simulateFeedImageViewNotVisible(at: 0)
         XCTAssertEqual(loader.cancelledImageURLs, [image0.url], "Expected a cancelled image URL request once first view is not visible anymore")
     }
     
@@ -311,7 +323,7 @@ open class FeedUIIntegrationTests: XCTestCase {
         sut.simulateAppearance()
         loader.completeFeedLoading(with: [makeImage()])
         
-        let view = sut.simulateFeedImageViewIsNotVisible(at: 0)
+        let view = sut.simulateFeedImageViewNotVisible(at: 0)
         loader.completeImageLoading(with: anyImageData(), at: 0)
         
         XCTAssertNil(view?.renderedImage, "Expected no rendered image when an image is not visible anymore")
@@ -383,7 +395,7 @@ open class FeedUIIntegrationTests: XCTestCase {
             imageLoader: loader.loadImageDataPublisher,
             selection: selection
         )
-        sut.replaceRefreshControlWithFakeForiOS17Support()
+
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         
@@ -400,35 +412,5 @@ open class FeedUIIntegrationTests: XCTestCase {
     
     private func runLoopToWaitUIKitFreeUpResources() {
         RunLoop.current.run(until: Date()+1)
-    }
-}
-
-private extension ListViewController {
-    func replaceRefreshControlWithFakeForiOS17Support() {
-        let fake = FakeRefreshControl()
-        
-        refreshControl?.allTargets.forEach { target in
-            refreshControl?.actions(forTarget: target, forControlEvent: .valueChanged)?.forEach { action in
-                fake.addTarget(target, action: Selector(action), for: .valueChanged)
-            }
-        }
-        
-        refreshControl = fake
-    }
-}
-
-private class FakeRefreshControl: UIRefreshControl {
-    private var _isRefreshing: Bool = false
-    
-    override var isRefreshing: Bool {
-        _isRefreshing
-    }
-    
-    override func beginRefreshing() {
-        _isRefreshing = true
-    }
-    
-    override func endRefreshing() {
-        _isRefreshing = false
     }
 }
