@@ -13,12 +13,15 @@ import Combine
 public final class FeedUIComposer {
     private init() { }
     
+    private typealias FeedPresentationAdapter = LoadResourcePresentationAdapter<Paginated<FeedImage>, FeedViewAdapter>
+    
     public static func feedComposeWith(
         feedLoader: @escaping () -> AnyPublisher<Paginated<FeedImage>, Error>,
         imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher,
         selection: @escaping (FeedImage) -> Void = { _ in }
     ) -> ListViewController {
-        let presentationAdapter = LoadResourcePresentationAdapter<Paginated<FeedImage>, FeedViewAdapter>(loader: feedLoader)
+        
+        let presentationAdapter = FeedPresentationAdapter(loader: feedLoader)
         
         let feedController = makeWith(title: FeedPresenter.title)
         feedController.onRefresh = presentationAdapter.loadResource
