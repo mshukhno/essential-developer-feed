@@ -49,4 +49,15 @@ public extension FeedImageDataStore {
         group.wait()
         return try result.get()
     }
+    
+    func retrieve(
+        dataForURL url: URL,
+        completion: @escaping (RetrievalResult) -> Void
+    ) { completion(.success(.none)) }
+    
+    func insert(
+        _ data: Data,
+        for url: URL,
+        completion: @escaping (InsertionResult) -> Void
+    ) { completion(.success(())) }
 }
