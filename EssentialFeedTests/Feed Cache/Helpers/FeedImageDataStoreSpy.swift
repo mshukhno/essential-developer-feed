@@ -19,21 +19,9 @@ final class FeedImageDataStoreSpy: FeedImageDataStore {
     
     private(set) var receivedMessages = [Messages]()
     
-    func insert(_ data: Data, for url: URL, completion: @escaping (InsertionResult) -> Void) {
-        completion(FeedImageDataStoreSpy.InsertionResult(catching: {
-            try insert(data, for: url)
-        }))
-    }
-    
     func insert(_ data: Data, for url: URL) throws {
         receivedMessages.append(.insert(data: data, for: url))
         try insertionResult?.get()
-    }
-    
-    func retrieve(dataForURL url: URL, completion: @escaping (FeedImageDataStore.RetrievalResult) -> Void) {
-        completion(RetrievalResult(catching: {
-            try retrieve(dataForURL: url)
-        }))
     }
     
     func retrieve(dataForURL url: URL) throws -> Data? {
