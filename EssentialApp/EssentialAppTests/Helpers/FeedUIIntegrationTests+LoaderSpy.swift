@@ -12,7 +12,7 @@ import Foundation
 
 extension FeedUIIntegrationTests {
     
-    class LoaderSpy: FeedImageDataLoader {
+    class LoaderSpy {
         
         // MARK: - FeedLoader
         private var feedRequests = [PassthroughSubject<Paginated<FeedImage>, Error>]()
@@ -65,23 +65,30 @@ extension FeedUIIntegrationTests {
         }
         
         // MARK: - FeedImageDataLoader
-        private var imageRequests = [(url: URL, result: Result<Data, Error>?)]()
+        
+        private var imageRequests = [(url: URL, publisher: PassthroughSubject<Data, Error>)]()
         
         var loadedImageURLs: [URL] {
             return imageRequests.map { $0.url }
         }
         
-        func loadImageData(from url: URL) throws -> Data {
-            imageRequests.append((url, .none))
-            return Data()
+        private(set) var cancelledImageURLs = [URL]()
+        
+        func loadImageDataPublisher(from url: URL) -> AnyPublisher<Data, Error> {
+            let publisher = PassthroughSubject<Data, Error>()
+            imageRequests.append((url, publisher))
+            return publisher.handleEvents(receiveCancel: { [weak self] in
+                self?.cancelledImageURLs.append(url)
+            }).eraseToAnyPublisher()
         }
         
         func completeImageLoading(with imageData: Data = Data(), at index: Int = 0) {
-            imageRequests[index].result = .success(imageData)
+            imageRequests[index].publisher.send(imageData)
+            imageRequests[index].publisher.send(completion: .finished)
         }
         
         func completeImageLoadingWithError(at index: Int = 0) {
-            imageRequests[index].result = .failure(anyNSError())
+            imageRequests[index].publisher.send(completion: .failure(anyNSError()))
         }
     }
 }
