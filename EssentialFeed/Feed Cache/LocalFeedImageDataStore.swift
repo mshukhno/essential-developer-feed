@@ -35,10 +35,9 @@ public extension FeedImageDataStore {
             group.leave()
         }
         group.wait()
-        
         return try result.get()
     }
-    
+
     func retrieve(dataForURL url: URL) throws -> Data? {
         let group = DispatchGroup()
         group.enter()
@@ -46,21 +45,8 @@ public extension FeedImageDataStore {
         retrieve(dataForURL: url) {
             result = $0
             group.leave()
-            
         }
         group.wait()
-        
         return try result.get()
     }
-    
-    func retrieve(
-        dataForURL url: URL,
-        completion: @escaping (RetrievalResult) -> Void
-    ) { }
-    
-    func insert(
-        _ data: Data,
-        for url: URL,
-        completion: @escaping (InsertionResult) -> Void
-    ) { }
 }
