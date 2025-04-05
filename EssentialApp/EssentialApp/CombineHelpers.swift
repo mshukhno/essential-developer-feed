@@ -85,7 +85,11 @@ private extension FeedImageDataCache {
 public extension LocalFeedLoader {
     func loadPublisher() -> AnyPublisher<[FeedImage], Error>  {
         Deferred {
-            Future(self.load)
+            Future { completion in
+                completion(Result {
+                    try self.load()
+                })
+            }
         }
         .eraseToAnyPublisher()
     }
